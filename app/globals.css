@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+/* Polices chargées dans layout.tsx */
+@theme inline {
+  --font-display: var(--font-unbounded), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Couleurs LMS Digital (reprises de la vidéo de présentation) */
+@theme {
+  --color-night: #0c0a1c;
+  --color-night-2: #15122b;
+  --color-night-3: #201b3d;
+  --color-ink: #f2f0fa;
+  --color-muted: #aaa5c6;
+  --color-faint: #747094;
+  --color-line: rgb(236 232 255 / 0.1);
+  --color-cyan: #4fd1ff;
+  --color-violet: #8b7bff;
+  --color-magenta: #f062c0;
+  --color-orange: #ff9f5a;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-night);
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-night);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgb(139 123 255 / 0.45);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-violet);
+  outline-offset: 3px;
+}
+
+section[id],
+article[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+/* ---------- Identité ---------- */
+
+/* Le dégradé de « SITES INTERNET » dans la vidéo */
+.text-gradient {
+  background-image: linear-gradient(
+    92deg,
+    var(--color-cyan) 0%,
+    var(--color-violet) 34%,
+    var(--color-magenta) 66%,
+    var(--color-orange) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Effet chromé du logo LMS */
+.text-chrome {
+  background-image: linear-gradient(180deg, #ffffff 0%, #e4e2ef 42%, #8e8aa8 52%, #f6f5fb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-gradient-brand {
+  background-image: linear-gradient(
+    120deg,
+    var(--color-cyan),
+    var(--color-violet) 40%,
+    var(--color-magenta) 70%,
+    var(--color-orange)
+  );
+}
+
+/* Fond « nébuleuse » de la vidéo */
+.nebula {
+  background-image:
+    radial-gradient(38% 46% at 12% 8%, rgb(139 123 255 / 0.34), transparent 72%),
+    radial-gradient(34% 42% at 88% 14%, rgb(240 98 192 / 0.26), transparent 72%),
+    radial-gradient(36% 40% at 4% 96%, rgb(255 159 90 / 0.2), transparent 72%),
+    radial-gradient(40% 44% at 96% 92%, rgb(79 209 255 / 0.2), transparent 72%);
+}
+
+/* ---------- Captures qui défilent au survol ---------- */
+
+.shot {
+  container-type: size;
+  position: relative;
+  overflow: hidden;
+}
+
+.shot > img {
+  position: absolute;
+  inset: 0 0 auto 0;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  transform: translateY(0);
+  transition: transform 1.1s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .shot-hover:hover .shot > img,
+  .shot-hover:focus-visible .shot > img {
+    transform: translateY(calc(-100% + 100cqh));
+    transition-duration: var(--scroll-duration, 10s);
+    transition-timing-function: cubic-bezier(0.37, 0, 0.63, 1);
+  }
+  .shot-hover:hover .shot-hint {
+    opacity: 0;
+  }
+}
+
+/* ---------- Apparition des aperçus du haut de page ---------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 48px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+.rise {
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  animation-delay: var(--delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rise {
+    animation: none;
+  }
+}
+
+/* Fenêtre d'aperçu en direct */
+dialog.live::backdrop {
+  background: rgb(8 6 20 / 0.82);
+  backdrop-filter: blur(6px);
+}
