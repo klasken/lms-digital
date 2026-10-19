@@ -95,13 +95,17 @@ article[id] {
 
 /* ---------- Captures qui défilent au survol ---------- */
 
+.shot picture {
+  display: contents;
+}
+
 .shot {
   container-type: size;
   position: relative;
   overflow: hidden;
 }
 
-.shot > img {
+.shot img {
   position: absolute;
   inset: 0 0 auto 0;
   width: 100%;
@@ -112,8 +116,8 @@ article[id] {
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .shot-hover:hover .shot > img,
-  .shot-hover:focus-visible .shot > img {
+  .shot-hover:hover .shot img,
+  .shot-hover:focus-visible .shot img {
     transform: translateY(calc(-100% + 100cqh));
     transition-duration: var(--scroll-duration, 10s);
     transition-timing-function: cubic-bezier(0.37, 0, 0.63, 1);

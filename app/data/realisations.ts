@@ -14,8 +14,9 @@ export type Realisation = {
   // Couleurs du site du client : fond, accent, texte.
   couleurs: [string, string, string];
   images: {
-    page: { src: string; srcPetit: string; width: number; height: number };
-    mobile: { src: string; width: number; height: number };
+    // srcSombre / srcPetitSombre : captures du site en thème sombre, si le site en a un.
+    page: { src: string; srcPetit: string; srcSombre?: string; srcPetitSombre?: string; width: number; height: number };
+    mobile: { src: string; srcSombre?: string; width: number; height: number };
   };
 };
 
@@ -59,22 +60,22 @@ export const REALISATIONS: Realisation[] = [
     },
   },
   {
-    slug: "shine",
-    nom: "Shine by Bloom",
-    metier: "Bouquets et paniers personnalisés",
-    lieu: "Orléans",
+    slug: "mygnardise",
+    nom: "My’gnardise",
+    metier: "Traiteur sucré & salé",
+    lieu: "Île-de-France",
     resume:
-      "Des fleurs fraîches accompagnées de soins et de petits cadeaux, composées sur commande. Un site poudré et élégant, à l'image de ses bouquets.",
-    url: "https://shineabybloom-siteaa.netlify.app/",
-    couleurs: ["#FCF7F6", "#E58DA0", "#2A1418"],
+      "Buffets, box et mignardises : mini burgers sur pain maison, navettes, verrines, cheesecakes et cupcakes, avec des recettes salées halal. Un site blanc et or, chic et épuré.",
+    url: "https://my-gnardise.netlify.app/",
+    couleurs: ["#FFFFFF", "#D4B55C", "#2A2920"],
     images: {
       page: {
-        src: "/realisations/shine-page.webp",
-        srcPetit: "/realisations/shine-page-petit.webp",
+        src: "/realisations/mygnardise-page.webp",
+        srcPetit: "/realisations/mygnardise-page-petit.webp",
         width: 1800,
-        height: 9768,
+        height: 8551,
       },
-      mobile: { src: "/realisations/shine-mobile.webp", width: 750, height: 4400 },
+      mobile: { src: "/realisations/mygnardise-mobile.webp", width: 750, height: 4400 },
     },
   },
   {
@@ -90,10 +91,15 @@ export const REALISATIONS: Realisation[] = [
       page: {
         src: "/realisations/melaea-page.webp",
         srcPetit: "/realisations/melaea-page-petit.webp",
+        srcSombre: "/realisations/melaea-page-sombre.webp",
+        srcPetitSombre: "/realisations/melaea-page-petit-sombre.webp",
         width: 1800,
         height: 6940,
       },
-      mobile: { src: "/realisations/melaea-mobile.webp", width: 750, height: 4400 },
+      mobile: {
+        src: "/realisations/melaea-mobile.webp",
+        srcSombre: "/realisations/melaea-mobile-sombre.webp",
+        width: 750, height: 4400 },
     },
   },
 ];

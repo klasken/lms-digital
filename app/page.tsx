@@ -2,6 +2,7 @@ import { Instagram, Mail, MapPin } from "lucide-react";
 import Navbar from "./components/Navbar";
 import Wordmark from "./components/Wordmark";
 import DmButton from "./components/DmButton";
+import WhatsAppButton from "./components/WhatsAppButton";
 import Realisations from "./components/Realisations";
 import ContactForm from "./components/ContactForm";
 import EcranPC from "./components/EcranPC";
@@ -158,11 +159,12 @@ function Contact() {
           </h2>
           <p className="mt-5 max-w-[34rem] text-lg leading-relaxed text-muted">
             Le plus simple : un message privé sur Instagram. Vous préférez écrire ici ? Remplissez le formulaire, je vous
-            réponds sous 24 h.
+            réponds en 30 minutes.
           </p>
 
-          <div className="mt-8">
+          <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:flex-nowrap sm:items-center">
             <DmButton size="lg" />
+            <WhatsAppButton size="lg" />
           </div>
 
           <div className="mt-12 rounded-2xl bg-night-2/80 p-5 ring-1 ring-line backdrop-blur md:p-8">

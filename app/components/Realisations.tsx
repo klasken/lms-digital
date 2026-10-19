@@ -72,6 +72,8 @@ function Projet({ projet, onOuvrir }: { projet: Realisation; onOuvrir: (affichag
             <ScrollShot
               src={projet.images.page.src}
               srcPetit={projet.images.page.srcPetit}
+              srcSombre={projet.images.page.srcSombre}
+              srcPetitSombre={projet.images.page.srcPetitSombre}
               sizes="(min-width: 1200px) 548px, (min-width: 768px) 50vw, calc(100vw - 40px)"
               width={projet.images.page.width}
               height={projet.images.page.height}
@@ -96,6 +98,7 @@ function Projet({ projet, onOuvrir }: { projet: Realisation; onOuvrir: (affichag
           <PhoneFrame className="rounded-[1.4rem] p-[4px]" ecranClassName="rounded-[1.15rem]">
             <ScrollShot
               src={projet.images.mobile.src}
+              srcSombre={projet.images.mobile.srcSombre}
               width={projet.images.mobile.width}
               height={projet.images.mobile.height}
               alt={`Site ${projet.nom} sur téléphone`}

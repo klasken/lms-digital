@@ -58,9 +58,13 @@ export function PhoneFrame({
 }
 
 // Capture d'une page entière, qui défile au survol (voir .shot dans globals.css).
+// Si une version sombre est fournie, elle s'affiche quand le visiteur est en thème sombre
+// (comme le vrai site du client).
 export function ScrollShot({
   src,
   srcPetit,
+  srcSombre,
+  srcPetitSombre,
   width,
   height,
   alt,
@@ -71,6 +75,8 @@ export function ScrollShot({
 }: {
   src: string;
   srcPetit?: string;
+  srcSombre?: string;
+  srcPetitSombre?: string;
   width: number;
   height: number;
   alt: string;
@@ -84,16 +90,25 @@ export function ScrollShot({
       className="shot"
       style={{ aspectRatio: ratio, background: fond, "--scroll-duration": `${duree}s` } as CSSProperties}
     >
-      <img
-        src={src}
-        srcSet={srcPetit ? `${srcPetit} 1000w, ${src} ${width}w` : undefined}
-        sizes={srcPetit ? sizes : undefined}
-        width={width}
-        height={height}
-        alt={alt}
-        loading="lazy"
-        decoding="async"
-      />
+      <picture>
+        {srcSombre && (
+          <source
+            media="(prefers-color-scheme: dark)"
+            srcSet={srcPetitSombre ? `${srcPetitSombre} 1000w, ${srcSombre} ${width}w` : srcSombre}
+            sizes={srcPetitSombre ? sizes : undefined}
+          />
+        )}
+        <img
+          src={src}
+          srcSet={srcPetit ? `${srcPetit} 1000w, ${src} ${width}w` : undefined}
+          sizes={srcPetit ? sizes : undefined}
+          width={width}
+          height={height}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
     </div>
   );
 }

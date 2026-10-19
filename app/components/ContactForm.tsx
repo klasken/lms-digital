@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Check, ChevronDown, LoaderCircle } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { INSTAGRAM } from "../data/site";
 
 type Statut = { type: "succes" | "erreur"; message: string } | null;
@@ -21,7 +21,6 @@ const SERVICES: Record<string, string> = {
 
 // Formulaire de demande de devis : chaque demande arrive directement par mail.
 export default function ContactForm() {
-  const [envoi, setEnvoi] = useState(false);
   const [statut, setStatut] = useState<Statut>(null);
 
   const envoyer = async (e: FormEvent<HTMLFormElement>) => {
@@ -37,12 +36,15 @@ export default function ContactForm() {
     const service = SERVICES[String(data.get("service"))] ?? String(data.get("service"));
     const message = String(data.get("message") ?? "");
 
-    setEnvoi(true);
-    setStatut(null);
+    // On affiche tout de suite la confirmation : FormSubmit met parfois 10 à 20 secondes à répondre,
+    // la demande part en arrière-plan (keepalive : elle continue même si la personne quitte la page).
+    form.reset();
+    setStatut({ type: "succes", message: "Demande envoyée, je vous réponds en 30 minutes ✓" });
 
     try {
       const res = await fetch(`https://formsubmit.co/ajax/${DESTINATAIRE}`, {
         method: "POST",
+        keepalive: true,
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           _subject: `Nouvelle demande de devis : ${nom} (${service})`,
@@ -56,15 +58,12 @@ export default function ContactForm() {
       });
       const json = await res.json().catch(() => null);
       if (!res.ok || String(json?.success) !== "true") throw new Error(json?.message ?? "Envoi refusé");
-      form.reset();
-      setStatut({ type: "succes", message: "Demande envoyée ✓ Je vous réponds sous 24 h." });
     } catch {
+      // Rare : si l'envoi a vraiment échoué, on prévient la personne.
       setStatut({
         type: "erreur",
-        message: `La demande n'est pas partie. Réessayez dans un instant, ou écrivez-moi directement sur Instagram (@${INSTAGRAM}).`,
+        message: `Oups, la demande n'est finalement pas partie. Réessayez, ou écrivez-moi directement sur Instagram (@${INSTAGRAM}).`,
       });
-    } finally {
-      setEnvoi(false);
     }
   };
 
@@ -117,24 +116,21 @@ export default function ContactForm() {
       {statut && (
         <p
           role={statut.type === "erreur" ? "alert" : "status"}
-          className={`flex items-start gap-2 rounded-xl px-4 py-3 text-sm ${
+          className={`flex items-start gap-2 rounded-xl px-4 py-3 text-[0.95rem] ${
             statut.type === "succes"
               ? "bg-emerald-400/10 text-emerald-300 ring-1 ring-emerald-400/25"
               : "bg-rose-400/10 text-rose-300 ring-1 ring-rose-400/25"
           }`}
         >
-          {statut.type === "succes" && <Check className="mt-0.5 size-4 shrink-0" aria-hidden />}
           {statut.message}
         </p>
       )}
 
       <button
         type="submit"
-        disabled={envoi}
         className="mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-4 font-semibold text-night transition hover:bg-white disabled:cursor-wait disabled:opacity-60"
       >
-        {envoi && <LoaderCircle className="size-4 animate-spin" aria-hidden />}
-        {envoi ? "Envoi en cours…" : "Envoyer ma demande"}
+        Envoyer ma demande
       </button>
     </form>
   );
