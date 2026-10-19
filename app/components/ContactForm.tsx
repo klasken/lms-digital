@@ -2,13 +2,24 @@
 
 import { useState, type FormEvent } from "react";
 import { Check, ChevronDown, LoaderCircle } from "lucide-react";
+import { INSTAGRAM } from "../data/site";
 
 type Statut = { type: "succes" | "erreur"; message: string } | null;
 
 const champ =
   "w-full rounded-xl bg-night px-4 py-3.5 text-ink ring-1 ring-line placeholder:text-faint transition focus:outline-none focus:ring-2 focus:ring-violet";
 
-// Formulaire de demande de devis : les messages arrivent dans la table « contacts » de Supabase.
+// Adresse qui reçoit les demandes du formulaire (via FormSubmit, https://formsubmit.co).
+// Au tout premier envoi, FormSubmit envoie un mail d'activation à cette adresse : il faut cliquer dessus une fois.
+const DESTINATAIRE = "ceugnietmarius@gmail.com";
+
+const SERVICES: Record<string, string> = {
+  vitrine: "Site vitrine",
+  ecommerce: "Boutique en ligne",
+  app: "Application mobile ou SaaS",
+};
+
+// Formulaire de demande de devis : chaque demande arrive directement par mail.
 export default function ContactForm() {
   const [envoi, setEnvoi] = useState(false);
   const [statut, setStatut] = useState<Statut>(null);
@@ -17,28 +28,40 @@ export default function ContactForm() {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
+
+    // Champ piège invisible : rempli seulement par les robots.
+    if (data.get("_honey")) return;
+
+    const nom = String(data.get("nom") ?? "");
+    const email = String(data.get("email") ?? "");
+    const service = SERVICES[String(data.get("service"))] ?? String(data.get("service"));
+    const message = String(data.get("message") ?? "");
+
     setEnvoi(true);
     setStatut(null);
 
     try {
-      // Chargé seulement au moment de l'envoi, pour alléger la page.
-      const { supabase } = await import("@/lib/supabase");
-      const { error } = await supabase.from("contacts").insert([
-        {
-          nom: data.get("nom"),
-          email: data.get("email"),
-          service: data.get("service"),
-          message: data.get("message"),
-        },
-      ]);
-      if (error) throw error;
+      const res = await fetch(`https://formsubmit.co/ajax/${DESTINATAIRE}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `Nouvelle demande de devis : ${nom} (${service})`,
+          _template: "table",
+          _replyto: email,
+          nom,
+          email,
+          projet: service,
+          message,
+        }),
+      });
+      const json = await res.json().catch(() => null);
+      if (!res.ok || String(json?.success) !== "true") throw new Error(json?.message ?? "Envoi refusé");
       form.reset();
-      setStatut({ type: "succes", message: "Demande envoyée. Je vous réponds sous 24 h, par email." });
+      setStatut({ type: "succes", message: "Demande envoyée ✓ Je vous réponds sous 24 h." });
     } catch {
       setStatut({
         type: "erreur",
-        message:
-          "La demande n'est pas partie. Vérifiez votre connexion et réessayez, ou écrivez-moi directement sur Instagram.",
+        message: `La demande n'est pas partie. Réessayez dans un instant, ou écrivez-moi directement sur Instagram (@${INSTAGRAM}).`,
       });
     } finally {
       setEnvoi(false);
@@ -47,6 +70,8 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={envoyer} className="grid gap-4">
+      <input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
+
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="grid gap-2">
           <span className="text-sm text-muted">Votre nom</span>

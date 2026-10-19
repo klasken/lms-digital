@@ -16,7 +16,6 @@ export default function HomePage() {
       <main>
         <Hero />
         <Realisations />
-        <Avantages />
         <Methode />
         <Contact />
       </main>
@@ -83,80 +82,6 @@ function Hero() {
             <EcranPC className="rise mx-auto max-w-[720px]" />
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-
-const AVANTAGES = [
-  {
-    titre: "Un design qui vous ressemble",
-    texte:
-      "Pas de modèle recyclé : couleurs, typographies et mise en page partent de votre activité. Les trois sites ci-dessus ne se ressemblent pas, et c'est voulu.",
-  },
-  {
-    titre: "Pensé d'abord pour le téléphone",
-    texte:
-      "Vos clients arrivent surtout depuis Instagram, donc sur mobile. Chaque page est conçue pour se lire et se parcourir d'un pouce.",
-  },
-  {
-    titre: "Relié à votre Instagram",
-    texte:
-      "Bouton de réservation en message privé, liens vers vos réseaux, vidéos de vos reels : votre site et votre compte travaillent ensemble.",
-    exemple: { nom: "Myss Event66", ancre: "#myss" },
-  },
-  {
-    titre: "Votre carte, claire et à jour",
-    texte:
-      "Vos produits, vos formules et vos prix, avec une version PDF si besoin : vos clients savent quoi commander avant même de vous écrire.",
-    exemple: { nom: "Sweet Cook", ancre: "#sweet-cook" },
-  },
-  {
-    titre: "Rapide et trouvable sur Google",
-    texte:
-      "Images optimisées, pages légères, titres et descriptions rédigés pour la recherche locale.",
-  },
-  {
-    titre: "Mis en ligne pour vous",
-    texte: "Je m'occupe de la publication. Vous recevez un lien prêt à partager, sans rien installer.",
-  },
-];
-
-function Avantages() {
-  return (
-    <section id="avantages" className="border-t border-line py-24 md:py-36">
-      <div className="mx-auto grid max-w-[1200px] gap-14 px-5 md:px-8 lg:grid-cols-12 lg:gap-10">
-        <div className="lg:col-span-4">
-          <div className="lg:sticky lg:top-32">
-            <h2 className="text-balance font-display text-[clamp(2rem,4.4vw,3rem)] font-semibold leading-[1.05] tracking-[-0.035em]">
-              Ce que vous obtenez
-            </h2>
-            <p className="mt-5 max-w-[22rem] text-lg leading-relaxed text-muted">
-              Les mêmes bases solides sur chaque projet, adaptées à votre métier.
-            </p>
-          </div>
-        </div>
-
-        <dl className="grid gap-x-12 sm:grid-cols-2 lg:col-span-8">
-          {AVANTAGES.map((a) => (
-            <div key={a.titre} className="border-t border-line py-8">
-              <dt className="font-display text-[1.12rem] font-medium leading-snug tracking-[-0.01em]">{a.titre}</dt>
-              <dd className="mt-3 leading-relaxed text-muted">
-                {a.texte}
-                {a.exemple && (
-                  <a
-                    href={a.exemple.ancre}
-                    className="mt-3 block w-fit text-sm text-ink underline decoration-violet/60 underline-offset-4 hover:decoration-violet"
-                  >
-                    Exemple : {a.exemple.nom}
-                  </a>
-                )}
-              </dd>
-            </div>
-          ))}
-        </dl>
       </div>
     </section>
   );
