@@ -1,4 +1,5 @@
-import { Instagram, Mail, MapPin } from "lucide-react";
+import Link from "next/link";
+import { BadgeCheck, Instagram, Mail, MapPin } from "lucide-react";
 import Navbar from "./components/Navbar";
 import Wordmark from "./components/Wordmark";
 import DmButton from "./components/DmButton";
@@ -8,7 +9,7 @@ import ContactForm from "./components/ContactForm";
 import EcranPC from "./components/EcranPC";
 import ReelPhone from "./components/ReelPhone";
 import { REALISATIONS } from "./data/realisations";
-import { EMAIL, INSTAGRAM, INSTAGRAM_URL } from "./data/site";
+import { EMAIL, ENTREPRISE, INSTAGRAM, INSTAGRAM_URL } from "./data/site";
 
 export default function HomePage() {
   return (
@@ -182,6 +183,17 @@ function Contact() {
               <MapPin className="size-4" aria-hidden />
               Basé à Lille, clients partout en France
             </li>
+            <li>
+              <a
+                href={ENTREPRISE.annuaire}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 hover:text-ink"
+              >
+                <BadgeCheck className="size-4" aria-hidden />
+                Entreprise déclarée · SIRET {ENTREPRISE.siret}
+              </a>
+            </li>
           </ul>
         </div>
       </div>
@@ -206,8 +218,27 @@ function Footer() {
           <a href={`mailto:${EMAIL}`} className="hover:text-ink">
             {EMAIL}
           </a>
-          <span className="text-faint">© {new Date().getFullYear()} LMS Digital</span>
+          <Link href="/mentions-legales" className="hover:text-ink">
+            Mentions légales
+          </Link>
+          <Link href="/mentions-legales#confidentialite" className="hover:text-ink">
+            Confidentialité
+          </Link>
         </div>
+      </div>
+      <div className="border-t border-line">
+        <p className="mx-auto max-w-[1200px] px-5 py-5 text-xs leading-relaxed text-faint md:px-8">
+          © {new Date().getFullYear()} LMS Digital · {ENTREPRISE.nom}, {ENTREPRISE.statut} · SIRET {ENTREPRISE.siret} ·{" "}
+          {ENTREPRISE.adresse} ·{" "}
+          <a
+            href={ENTREPRISE.annuaire}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-white/20 underline-offset-4 hover:text-muted"
+          >
+            Vérifier sur l&apos;annuaire des entreprises
+          </a>
+        </p>
       </div>
     </footer>
   );

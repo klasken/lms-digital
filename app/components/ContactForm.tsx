@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import { INSTAGRAM } from "../data/site";
 
@@ -125,6 +126,16 @@ export default function ContactForm() {
           {statut.message}
         </p>
       )}
+
+      <p className="text-xs leading-relaxed text-faint">
+        Vos informations servent uniquement à vous répondre et ne sont jamais revendues.{" "}
+        <Link
+          href="/mentions-legales#confidentialite"
+          className="underline decoration-white/20 underline-offset-4 hover:text-muted"
+        >
+          En savoir plus
+        </Link>
+      </p>
 
       <button
         type="submit"
