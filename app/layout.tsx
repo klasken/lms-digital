@@ -14,22 +14,26 @@ const hanken = Hanken_Grotesk({
   display: "swap",
 });
 
-const SITE_URL = "https://lms.digital";
+// Adresse officielle du site (www.lms-digital.com redirige vers celle-ci).
+const SITE_URL = "https://lms-digital.com";
 const SITE_NAME = "LMS Digital";
+
+// Titre et description affichés dans les résultats Google.
+const SEO_TITLE = "LMS Digital";
+const SEO_DESCRIPTION =
+  "Besoin d'un site internet ? Nous créons votre site vitrine ou e-commerce clé en main. Attirez de nouveaux clients facilement. Solutions adaptées à tout budget.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: SITE_NAME,
-  title: "LMS Digital · Création de sites internet",
-  description:
-    "Sites internet sur mesure pour traiteurs, pâtissières, artisans et indépendants : un design à votre image, pensé pour le téléphone et relié à votre Instagram.",
+  title: SEO_TITLE,
+  description: SEO_DESCRIPTION,
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "LMS Digital · Création de sites internet",
-    description:
-      "Sites internet sur mesure pour traiteurs, pâtissières, artisans et indépendants. Découvrez les réalisations.",
+    title: SEO_TITLE,
+    description: SEO_DESCRIPTION,
     url: SITE_URL,
     siteName: SITE_NAME,
     type: "website",
@@ -46,7 +50,7 @@ const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: SITE_NAME,
-  alternateName: ["LMS", "lms.digital"],
+  alternateName: ["LMS", "lms-digital.com"],
   url: `${SITE_URL}/`,
 };
 
