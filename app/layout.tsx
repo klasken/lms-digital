@@ -31,6 +31,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  // Prouve à Google Search Console que le site t'appartient.
+  verification: {
+    google: "mUxzW3ld50E5IKOr-_a0OTWDB0ONIrNEgvJGP_Fonfk",
+  },
   openGraph: {
     title: SEO_TITLE,
     description: SEO_DESCRIPTION,
