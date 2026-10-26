@@ -5,8 +5,12 @@ import Wordmark from "../components/Wordmark";
 import { EMAIL, ENTREPRISE, INSTAGRAM, INSTAGRAM_URL, WHATSAPP } from "../data/site";
 
 export const metadata: Metadata = {
-  title: "Mentions légales et confidentialité · LMS Digital",
+  // « · LMS Digital » est ajouté automatiquement par le modèle de titre de app/layout.tsx.
+  title: "Mentions légales et confidentialité",
   description: "Informations légales sur LMS Digital (Marius Ceugniet, entrepreneur individuel) et politique de confidentialité.",
+  // Sans cette ligne, la page reprendrait l'adresse canonique de l'accueil (« / »)
+  // et Google la traiterait comme un doublon de la page d'accueil.
+  alternates: { canonical: "/mentions-legales" },
 };
 
 export default function MentionsLegales() {
