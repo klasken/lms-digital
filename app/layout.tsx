@@ -22,9 +22,9 @@ const SITE_NAME = "LMS Digital";
 // Titre et description affichés dans les résultats Google.
 // Le titre commence par le nom de la marque, puis dit ce que fait le site :
 // Google réécrit moins souvent un titre complet qu'un titre réduit au seul nom.
-const SEO_TITLE = "LMS Digital – Création de sites internet à Lille";
+const SEO_TITLE = "LMS Digital – Création de sites internet";
 const SEO_DESCRIPTION =
-  "LMS Digital crée votre site internet sur mesure, depuis Lille : sites vitrines et e-commerce pour traiteurs, pâtissiers, artisans et indépendants, pensés pour le mobile.";
+  "LMS Digital crée votre site internet sur mesure : sites vitrines et e-commerce pour traiteurs, pâtissiers, artisans et indépendants, pensés pour le mobile.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
